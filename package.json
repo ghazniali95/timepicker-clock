@@ -1,5 +1,5 @@
 {
-  "name": "react-analog-time-picker",
+  "name": "analog-time-picker",
   "version": "0.1.0",
   "description": "A dependency-free, draggable analog clock time picker for React. Configurable colors and size.",
   "keywords": [
@@ -12,6 +12,14 @@
     "svg"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/ghazniali95/timepicker-clock#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghazniali95/timepicker-clock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ghazniali95/timepicker-clock/issues"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

@@ -1,4 +1,4 @@
-# react-analog-time-picker
+# analog-time-picker
 
 A draggable **analog clock time picker** for React. Drag the short hand for the
 hour and the long hand for the minutes — the chosen time shows above the dial in
@@ -13,7 +13,7 @@ AM/PM (or 24-hour).
 ## Install
 
 ```bash
-npm install react-analog-time-picker
+npm install analog-time-picker
 ```
 
 > `react` and `react-dom` (v17+) are peer dependencies — you already have them.
@@ -22,7 +22,7 @@ npm install react-analog-time-picker
 
 ```tsx
 import { useState } from 'react';
-import { AnalogTimePicker } from 'react-analog-time-picker';
+import { AnalogTimePicker } from 'analog-time-picker';
 
 export function Example() {
   const [time, setTime] = useState<Date | null>(null);
