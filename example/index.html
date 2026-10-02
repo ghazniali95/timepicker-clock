@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>react-analog-time-picker — demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+        background: #fafafa;
+        color: #1f2937;
+      }
+      .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 64px; }
+      h1 { font-size: 22px; margin-bottom: 6px; }
+      .lede { color: #6b7280; margin-top: 0; max-width: 680px; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 28px;
+      }
+      @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+      .card {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .card h2 { font-size: 15px; margin: 0 0 4px; }
+      .card .sub { font-size: 12px; color: #9ca3af; margin: 0 0 16px; }
+      .clock-slot { flex: 1; display: flex; align-items: center; }
+      pre {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 18px 0 0;
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 11.5px;
+        line-height: 1.5;
+        overflow-x: auto;
+      }
+      pre .k { color: #7dd3fc; }
+      pre .s { color: #fdba74; }
+      .note {
+        margin-top: 32px;
+        padding: 14px 16px;
+        background: #f3f4f6;
+        border-radius: 10px;
+        font-size: 13px;
+        color: #4b5563;
+        max-width: 680px;
+      }
+      code { background: #e5e7eb; padding: 1px 5px; border-radius: 4px; }
+    </style>
+    <!-- React resolved from a CDN so this demo needs no build step. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.3.1",
+          "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>react-analog-time-picker</h1>
+      <p class="lede">
+        Each clock below is <b>hardcoded in the component's own code</b> — the
+        developer picks the colours and size by passing props. The person viewing
+        the clock has no controls; they just drag the hands to set a time.
+      </p>
+
+      <div class="grid" id="root"></div>
+
+      <div class="note">
+        The code block under each clock is the <b>exact</b> JSX a developer writes.
+        No pickers, no sliders ship with the package — colours and size are set
+        once, in code, via the <code>colors</code> and <code>size</code> props.
+      </div>
+    </div>
+
+    <script type="module">
+      import React, { useState } from 'react';
+      import { createRoot } from 'react-dom/client';
+      // The built package. Run `npm run build` first.
+      import { AnalogTimePicker } from '../dist/index.mjs';
+
+      function Clock({ size, colors }) {
+        const [time, setTime] = useState(null);
+        return React.createElement(AnalogTimePicker, { value: time, onChange: setTime, size, colors });
+      }
+
+      function Card({ title, sub, size, colors, code }) {
+        return React.createElement(
+          'div', { className: 'card' },
+          React.createElement('h2', null, title),
+          React.createElement('p', { className: 'sub' }, sub),
+          React.createElement('div', { className: 'clock-slot' },
+            React.createElement(Clock, { size, colors }),
+          ),
+          React.createElement('pre', { dangerouslySetInnerHTML: { __html: code } }),
+        );
+      }
+
+      const brandCode =
+        '&lt;<span class="k">AnalogTimePicker</span>\n' +
+        '  size={<span class="s">260</span>}\n' +
+        '  colors={{\n' +
+        '    hourHand: <span class="s">\'#000000\'</span>,\n' +
+        '    minuteHand: <span class="s">\'#dd7327\'</span>,\n' +
+        '  }}\n' +
+        '/&gt;';
+
+      const blueCode =
+        '&lt;<span class="k">AnalogTimePicker</span>\n' +
+        '  size={<span class="s">300</span>}\n' +
+        '  colors={{\n' +
+        '    hourHand: <span class="s">\'#1e3a8a\'</span>,\n' +
+        '    minuteHand: <span class="s">\'#2563eb\'</span>,\n' +
+        '    face: <span class="s">\'#eff6ff\'</span>,\n' +
+        '  }}\n' +
+        '/&gt;';
+
+      const minimalCode =
+        '&lt;<span class="k">AnalogTimePicker</span>\n' +
+        '  size={<span class="s">220</span>}\n' +
+        '  colors={{\n' +
+        '    hourHand: <span class="s">\'#111827\'</span>,\n' +
+        '    minuteHand: <span class="s">\'#6b7280\'</span>,\n' +
+        '    face: <span class="s">\'#ffffff\'</span>,\n' +
+        '  }}\n' +
+        '/&gt;';
+
+      function Demo() {
+        return React.createElement(React.Fragment, null,
+          React.createElement(Card, {
+            title: 'Brand (orange + black)',
+            sub: 'The default Nosh look',
+            size: 260,
+            colors: { hourHand: '#000000', minuteHand: '#dd7327' },
+            code: brandCode,
+          }),
+          React.createElement(Card, {
+            title: 'Blue theme — bigger',
+            sub: 'Different colours, size 300',
+            size: 300,
+            colors: { hourHand: '#1e3a8a', minuteHand: '#2563eb', face: '#eff6ff' },
+            code: blueCode,
+          }),
+          React.createElement(Card, {
+            title: 'Minimal grey — smaller',
+            sub: 'White face, size 220',
+            size: 220,
+            colors: { hourHand: '#111827', minuteHand: '#6b7280', face: '#ffffff' },
+            code: minimalCode,
+          }),
+        );
+      }
+
+      createRoot(document.getElementById('root')).render(React.createElement(Demo));
+    </script>
+  </body>
+</html>
